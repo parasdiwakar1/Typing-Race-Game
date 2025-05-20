@@ -16,15 +16,15 @@ const TypingRaceGame = () => {
   const [wrongWords, setWrongWords] = useState(new Set());
   const [activeWordIndex, setActiveWordIndex] = useState(0);
   const [gameHistory, setGameHistory] = useState([]);
-  const [difficulty, setDifficulty] = useState('medium'); // easy, medium, hard
-  const [trackTheme, setTrackTheme] = useState('classic'); // classic, desert, snow, night, beach
+  const [difficulty, setDifficulty] = useState('medium'); 
+  const [trackTheme, setTrackTheme] = useState('classic'); 
   const [showSettings, setShowSettings] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   
   const audioRef = useRef(null);
   const intervalRef = useRef(null);
 
-  // Improved paragraphs for typing practice with different themes
+
   const paragraphsByTheme = {
     classic: [
       "The quick brown fox jumps over the lazy dog. This pangram contains every letter of the alphabet and is perfect for typing practice.",
@@ -53,12 +53,12 @@ const TypingRaceGame = () => {
     ]
   };
 
-  // Enhanced car designs with different models
+  
   const carDesigns = [
-    { emoji: '🏎️', name: 'Formula Racer', color: '#3B82F6' },
-    { emoji: '🚗', name: 'Speed Demon', color: '#EF4444' },
-    { emoji: '🚙', name: 'Lightning SUV', color: '#10B981' },
-    { emoji: '🚗', name: 'Thunder Bolt', color: '#F59E0B' },
+    { emoji: '🚎', name: 'Formula Racer', color: '#3B82F6' },
+    { emoji: '🚌', name: 'Speed Demon', color: '#EF4444' },
+    { emoji: '🚕', name: 'Lightning SUV', color: '#10B981' },
+    { emoji: '🚕', name: 'Thunder Bolt', color: '#F59E0B' },
     { emoji: '🚓', name: 'Storm Chaser', color: '#8B5CF6' }
   ];
 
@@ -106,7 +106,6 @@ const TypingRaceGame = () => {
     }
   };
 
-  // Difficulty settings affect computer car speeds and time limits
   const difficultySettings = {
     easy: {
       computerSpeedMultiplier: 0.35,
@@ -134,32 +133,26 @@ const TypingRaceGame = () => {
     }
   };
 
-  // Properly configured background music
   const backgroundMusic = {
     url: "https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js",
     placeholder: "racing-background-music.mp3"
   };
 
-  // Calculate time based on paragraph length and difficulty
   const calculateTimeForParagraph = (paragraph) => {
-    const averageWPM = 40; // Average typing speed
+    const averageWPM = 40; 
     const wordCount = paragraph.split(' ').length;
-    const baseTime = Math.ceil((wordCount / averageWPM) * 60) + 20; // Add 20 seconds buffer
+    const baseTime = Math.ceil((wordCount / averageWPM) * 60) + 20; 
     
     return Math.ceil(baseTime * difficultySettings[difficulty].timeMultiplier);
   };
-
-  // Initialize game
   useEffect(() => {
     initializeGame();
   }, []);
 
   const initializeGame = () => {
-    // Choose a theme category randomly
     const themes = Object.keys(paragraphsByTheme);
     const randomTheme = themes[Math.floor(Math.random() * themes.length)];
     
-    // Get paragraphs for that theme
     const themeParagraphs = paragraphsByTheme[randomTheme];
     const randomParagraph = themeParagraphs[Math.floor(Math.random() * themeParagraphs.length)];
     
@@ -168,9 +161,8 @@ const TypingRaceGame = () => {
     
     const calculatedTime = calculateTimeForParagraph(randomParagraph);
     setInitialTime(calculatedTime);
-    setRaceTimer(calculatedTime);
+    setRaceTimer(calculatedTime*2+20);
     
-    // Create cars with enhanced designs and adjusted speeds based on difficulty
     const initialCars = carDesigns.map((design, index) => ({
       id: index,
       name: index === 0 ? 'You' : design.name,
@@ -178,7 +170,7 @@ const TypingRaceGame = () => {
       color: design.color,
       isPlayer: index === 0,
       position: 0,
-      speed: index === 0 ? 0 : (Math.random() * 0.3 + difficultySettings[difficulty].computerSpeedMultiplier), // Computer cars speed based on difficulty
+      speed: index === 0 ? 0 : (Math.random() * 0.3 + difficultySettings[difficulty].computerSpeedMultiplier), 
       finished: false,
       finishTime: null
     }));
@@ -190,7 +182,6 @@ const TypingRaceGame = () => {
     setRaceResults([]);
   };
 
-  // Start game countdown
   const startGame = () => {
     setGameState('countdown');
     setCountdown(5);
@@ -207,13 +198,13 @@ const TypingRaceGame = () => {
     }, 1000);
   };
 
-  // Start the actual race
+
   const startRace = () => {
     setGameState('racing');
     
-    // Play background music
+    
     if (audioRef.current && soundEnabled) {
-      audioRef.current.volume = 0.5; // Set volume to 50%
+      audioRef.current.volume = 0.5; 
       audioRef.current.play().catch(console.error);
     }
     
@@ -243,10 +234,10 @@ const TypingRaceGame = () => {
           return car;
         })
       );
-    }, 100);
+    }, 1000);
   };
 
-  // End race and calculate results
+  
   const endRace = () => {
     setGameState('finished');
     clearInterval(intervalRef.current);
@@ -256,7 +247,7 @@ const TypingRaceGame = () => {
       audioRef.current.currentTime = 0;
     }
     
-    // Calculate final results - only cars that finished
+   
     const finishedCars = cars.filter(car => car.position >= 100 || car.finished);
     const unfinishedCars = cars.filter(car => car.position < 100 && !car.finished);
     
@@ -428,7 +419,7 @@ const TypingRaceGame = () => {
         loop
         preload="auto"
       >
-        <source src="/api/placeholder/400/320" type="audio/mp3" />
+        <source src="/Imran Khan - Amplifier (Official Music Video).mp3" type="audio/mp3" />
       </audio>
 
       {/* Animated Background Elements */}
@@ -548,7 +539,7 @@ const TypingRaceGame = () => {
         </div>
         
         {/* Track Theme Indicator */}
-        <div className="absolute top-2 left-2 bg-white bg-opacity-80 px-3 py-1 rounded-full shadow text-sm font-bold flex items-center gap-1">
+        <div className="absolute top-0 left-2  bg-white bg-opacity-80 p-1 rounded-full shadow text-sm font-bold flex items-center gap-1">
           {trackThemes[trackTheme].emoji} {trackThemes[trackTheme].name}
         </div>
         
@@ -615,7 +606,7 @@ const TypingRaceGame = () => {
                     
                     {/* Car Info */}
                     <div className="mt-2">
-                      <div className="text-xs font-bold text-orange-300 drop-shadow-lg">
+                      <div className="text-xs font-bold text-orange-300 pl-4 drop-shadow-lg">
                         {car.name}
                       </div>
                       
@@ -657,7 +648,7 @@ const TypingRaceGame = () => {
         <div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-xl p-6 mb-6 shadow-xl">
           <div className="mb-4">
             <h3 className="text-xl font-bold mb-3 text-gray-800">🎯 Type the text below:</h3>
-            <div className="text-lg leading-relaxed p-6 bg-gray-50 rounded-lg border-2 border-gray-200 min-h-40 shadow-inner">
+            <div className="text-lg leading-relaxed flex flex-wrap p-6 bg-gray-50 rounded-lg border-2 border-gray-200 min-h-40 shadow-inner">
               {renderTypedText()}
             </div>
           </div>
@@ -705,7 +696,6 @@ const TypingRaceGame = () => {
       {gameState === 'finished' && (
         <div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-xl p-6 shadow-xl">
           <h2 className="text-3xl font-bold text-center mb-6 flex items-center justify-center gap-3">
-            <Trophy className="text-yellow-500" />
             🏆 Championship Results
           </h2>
           
