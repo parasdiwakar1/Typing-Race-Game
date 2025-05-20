@@ -58,7 +58,7 @@ const TypingRaceGame = () => {
     { emoji: '🏎️', name: 'Formula Racer', color: '#3B82F6' },
     { emoji: '🚗', name: 'Speed Demon', color: '#EF4444' },
     { emoji: '🚙', name: 'Lightning SUV', color: '#10B981' },
-    { emoji: '🏁', name: 'Thunder Bolt', color: '#F59E0B' },
+    { emoji: '🚗', name: 'Thunder Bolt', color: '#F59E0B' },
     { emoji: '🚓', name: 'Storm Chaser', color: '#8B5CF6' }
   ];
 
@@ -574,7 +574,7 @@ const TypingRaceGame = () => {
                 
                 {/* Car */}
                 <div 
-                  className="absolute top-1/2 transform -translate-y-1/2 transition-all duration-300 ease-out z-10"
+                  className="absolute mt-20 flex ml-10 transform -translate-y-1/2 transition-all duration-300 ease-out z-10"
                   style={{ 
                     left: `${Math.min(car.position, 95)}%`,
                     transform: 'translateY(-50%) translateX(-50%)'
@@ -583,15 +583,12 @@ const TypingRaceGame = () => {
                   <div className="text-center group">
                     {/* Car Body */}
                     <div 
-                      className="relative w-16 h-12 rounded-lg shadow-xl flex items-center justify-center transform transition-transform group-hover:scale-110"
-                      style={{ 
-                        backgroundColor: car.color,
-                        background: `linear-gradient(135deg, ${car.color}, ${car.color}dd)`
-                      }}
+                      className="relative w-16 h-12 rounded-lg  flex items-center justify-center transform transition-transform group-hover:scale-110"
+                     
                     >
                       {/* Car Details */}
                       <div className="absolute inset-1 bg-white bg-opacity-20 rounded-md"></div>
-                      <span className="text-2xl relative z-10 filter drop-shadow-sm">{car.emoji}</span>
+                      <span className="text-[50px] relative z-10 filter drop-shadow-sm">{car.emoji}</span>
                       
                       {/* Speed Lines (when moving) */}
                       {gameState === 'racing' && car.position > 1 && (
@@ -618,14 +615,10 @@ const TypingRaceGame = () => {
                     
                     {/* Car Info */}
                     <div className="mt-2">
-                      <div className="text-xs font-bold text-white drop-shadow-lg">
+                      <div className="text-xs font-bold text-orange-300 drop-shadow-lg">
                         {car.name}
                       </div>
-                      {car.isPlayer && (
-                        <div className="text-xs text-yellow-300 font-semibold">
-                          YOU
-                        </div>
-                      )}
+                      
                     </div>
                   </div>
                 </div>
